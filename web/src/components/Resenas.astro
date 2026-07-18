@@ -1,0 +1,48 @@
+---
+import { resenas } from '../lib/resenas';
+
+const { google, resenas: listaResenas } = resenas;
+const ratingTexto = google.rating.toFixed(1);
+---
+
+<section class="mx-auto max-w-6xl px-4 py-14" aria-labelledby="resenas-titulo">
+  <h2 id="resenas-titulo" class="text-center font-titulos text-3xl font-extrabold text-tinta md:text-4xl">
+    Lo que dicen las familias
+  </h2>
+  <p class="mx-auto mt-3 max-w-2xl text-center font-texto text-tinta/70">
+    {ratingTexto} de 5 estrellas con {google.cantidad} reseñas en Google.
+  </p>
+
+  <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      listaResenas.map((resena) => (
+        <figure class="flex flex-col gap-3 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-black/5">
+          <div aria-hidden="true" class="flex gap-1 text-amarillo">
+            {Array.from({ length: 5 }).map(() => (
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                <path d="M12 2.5 14.9 8.6 21.6 9.4 16.8 14 18 20.6 12 17.4 6 20.6 7.2 14 2.4 9.4 9.1 8.6Z" />
+              </svg>
+            ))}
+          </div>
+          <span class="sr-only">5 de 5 estrellas</span>
+          <blockquote class="font-texto text-sm text-tinta/80">“{resena.texto}”</blockquote>
+          <figcaption class="mt-auto">
+            <p class="font-titulos text-sm font-bold text-tinta">{resena.autor}</p>
+            <p class="font-texto text-xs text-tinta/50">Reseña de Google</p>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+
+  <div class="mt-10 flex justify-center">
+    <a
+      href={google.url}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center justify-center gap-2 rounded-full bg-menta px-6 py-3 font-texto text-base font-bold text-white shadow-md transition-transform hover:scale-105 hover:bg-menta-dark"
+    >
+      Ver todas las reseñas en Google
+    </a>
+  </div>
+</section>

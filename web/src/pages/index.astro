@@ -7,6 +7,7 @@ import ServiciosTematicos from '../components/ServiciosTematicos.astro';
 import CtaWhatsApp from '../components/CtaWhatsApp.astro';
 import Globos from '../components/Globos.astro';
 import Faq from '../components/Faq.astro';
+import BadgeGoogle from '../components/BadgeGoogle.astro';
 import { site } from '../lib/site';
 import { faqs } from '../lib/faqs';
 import { resolveImage, optimizedAbsoluteUrl } from '../lib/images';
@@ -35,6 +36,7 @@ const jsonLd = [buildLocalBusiness(logoUrl), buildWebSite(), buildFaqPage(faqs.g
         {site.tagline}
       </h1>
       <p class="font-texto text-lg text-tinta/80 md:text-xl">{site.claim}</p>
+      <BadgeGoogle />
       <CtaWhatsApp texto="Cotiza tu fiesta por WhatsApp" />
     </div>
   </section>

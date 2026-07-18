@@ -1,0 +1,21 @@
+---
+import { resenas } from '../lib/resenas';
+
+const { rating, cantidad, url } = resenas.google;
+const ratingTexto = rating.toFixed(1);
+---
+
+<a
+  href={url}
+  target="_blank"
+  rel="noopener"
+  aria-label={`${ratingTexto} de 5 estrellas en Google, con ${cantidad} reseñas. Abre la ficha de Always Kids en Google`}
+  class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-texto text-sm font-bold text-tinta shadow-sm ring-1 ring-black/5 transition-transform hover:-translate-y-0.5 hover:shadow-md"
+>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0 text-amarillo">
+    <path d="M12 2.5 14.9 8.6 21.6 9.4 16.8 14 18 20.6 12 17.4 6 20.6 7.2 14 2.4 9.4 9.1 8.6Z" />
+  </svg>
+  <span>{ratingTexto} en Google</span>
+  <span class="text-tinta/50">·</span>
+  <span>{cantidad} reseñas</span>
+</a>

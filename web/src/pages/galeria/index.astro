@@ -3,6 +3,8 @@ import { getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GalleryLightbox from '../../components/GalleryLightbox.tsx';
 import CtaWhatsApp from '../../components/CtaWhatsApp.astro';
+import BadgeGoogle from '../../components/BadgeGoogle.astro';
+import Resenas from '../../components/Resenas.astro';
 import { site } from '../../lib/site';
 import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
 import { buildLocalBusiness } from '../../lib/seo';
@@ -32,7 +34,7 @@ const logo = resolveImage('logo');
 
 const title = `Reseñas y Galería | ${site.nombre} — Animación de fiestas infantiles a domicilio en Santiago`;
 const description =
-  'Galería de fotos de celebraciones animadas por Always Kids en Santiago: cumpleaños deportivos, científicos y plazas blandas para bebés.';
+  'Always Kids tiene 5.0 estrellas en Google con 22 reseñas. Revisa las opiniones de las familias y la galería de fotos de celebraciones animadas en Santiago: cumpleaños deportivos, científicos y plazas blandas para bebés.';
 
 const logoUrl = await optimizedAbsoluteUrl(logo);
 const jsonLd = [buildLocalBusiness(logoUrl)];
@@ -46,6 +48,9 @@ const jsonLd = [buildLocalBusiness(logoUrl)];
     <p class="mx-auto mt-3 max-w-2xl text-center font-texto text-tinta/70">
       Momentos reales de cumpleaños, celebraciones y eventos animados por Always Kids en Santiago.
     </p>
+    <div class="mt-4 flex justify-center">
+      <BadgeGoogle />
+    </div>
 
     <div class="mt-8">
       <GalleryLightbox client:load fotos={fotos} />
@@ -55,4 +60,6 @@ const jsonLd = [buildLocalBusiness(logoUrl)];
       <CtaWhatsApp texto="Quiero mi celebración con Always Kids" />
     </div>
   </section>
+
+  <Resenas />
 </BaseLayout>
