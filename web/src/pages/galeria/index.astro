@@ -1,0 +1,58 @@
+---
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GalleryLightbox from '../../components/GalleryLightbox.tsx';
+import CtaWhatsApp from '../../components/CtaWhatsApp.astro';
+import { site } from '../../lib/site';
+import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
+import { buildLocalBusiness } from '../../lib/seo';
+
+const totalFotos = 17;
+const nombres = Array.from({ length: totalFotos }, (_, indice) => `galeria-${indice + 1}`);
+
+const fotos = await Promise.all(
+  nombres.map(async (nombre, indice) => {
+    const origen = resolveImage(nombre);
+    const alt = `Foto ${indice + 1} de una celebración animada por Always Kids`;
+    const thumb = await getImage({ src: origen, width: 480 });
+    const full = await getImage({ src: origen, width: 1400 });
+    return {
+      thumbSrc: thumb.src,
+      thumbWidth: thumb.attributes.width as number,
+      thumbHeight: thumb.attributes.height as number,
+      fullSrc: full.src,
+      fullWidth: full.attributes.width as number,
+      fullHeight: full.attributes.height as number,
+      alt,
+    };
+  }),
+);
+
+const logo = resolveImage('logo');
+
+const title = `Reseñas y Galería | ${site.nombre} — Animación de fiestas infantiles a domicilio en Santiago`;
+const description =
+  'Galería de fotos de celebraciones animadas por Always Kids en Santiago: cumpleaños deportivos, científicos y plazas blandas para bebés.';
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const jsonLd = [buildLocalBusiness(logoUrl)];
+---
+
+<BaseLayout title={title} description={description} path="/galeria/" ogImage={logo} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="text-center font-titulos text-3xl font-extrabold text-tinta md:text-4xl">
+      Reseñas y Galería
+    </h1>
+    <p class="mx-auto mt-3 max-w-2xl text-center font-texto text-tinta/70">
+      Momentos reales de cumpleaños, celebraciones y eventos animados por Always Kids en Santiago.
+    </p>
+
+    <div class="mt-8">
+      <GalleryLightbox client:load fotos={fotos} />
+    </div>
+
+    <div class="mt-12 flex justify-center">
+      <CtaWhatsApp texto="Quiero mi celebración con Always Kids" />
+    </div>
+  </section>
+</BaseLayout>

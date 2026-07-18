@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaWhatsApp from '../components/CtaWhatsApp.astro';
+import { site } from '../lib/site';
+import { resolveImage, optimizedAbsoluteUrl } from '../lib/images';
+import { buildLocalBusiness } from '../lib/seo';
+
+const logo = resolveImage('logo');
+
+const title = `Página no encontrada | ${site.nombre}`;
+const description = 'La página que buscas no existe. Vuelve al inicio de Always Kids para conocer nuestros servicios de animación infantil a domicilio en Santiago.';
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const jsonLd = [buildLocalBusiness(logoUrl)];
+---
+
+<BaseLayout title={title} description={description} path="/404/" ogImage={logo} jsonLd={jsonLd} noindex>
+  <section class="mx-auto flex max-w-2xl flex-col items-center gap-5 px-4 py-24 text-center">
+    <span class="text-6xl" aria-hidden="true">🎈</span>
+    <h1 class="font-titulos text-3xl font-extrabold text-tinta md:text-4xl">Página no encontrada</h1>
+    <p class="font-texto text-tinta/80">
+      Parece que esta página se fue de fiesta. Vuelve al inicio o escríbenos si necesitas ayuda.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/" class="rounded-full bg-menta px-6 py-3 font-texto font-bold text-white shadow-md hover:scale-105 transition-transform">
+        Volver al inicio
+      </a>
+      <CtaWhatsApp texto="Escríbenos por WhatsApp" />
+    </div>
+  </section>
+</BaseLayout>

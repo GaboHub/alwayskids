@@ -1,0 +1,145 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaWhatsApp from '../CtaWhatsApp.astro';
+import TematicasCombinables from '../TematicasCombinables.astro';
+import { site, getCategoria } from '../../lib/site';
+import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
+import { buildLocalBusiness, buildService } from '../../lib/seo';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const servicios = await getCollection('servicios');
+const servicio = servicios.find((entrada) => entrada.data.slug === slug);
+if (!servicio) throw new Error(`Servicio no encontrado: ${slug}`);
+
+const { data } = servicio;
+const { Content } = await render(servicio);
+
+const categoria = getCategoria(data.categoria);
+const heroImage = resolveImage(`${slug}-hero`);
+const logo = resolveImage('logo');
+
+const galeria = [1, 2, 3, 4].map((numero) => resolveImage(`${slug}-${numero}`));
+
+const esPlazaBlanda = Boolean(data.incluye);
+const itemsDestacados = data.incluye?.filter((item) => /hora|monitor/i.test(item)) ?? [];
+const itemsIncluye = data.incluye?.filter((item) => !itemsDestacados.includes(item)) ?? [];
+
+const title = `${data.titulo} | ${site.nombre} — Animación a domicilio en Santiago`;
+const description = `${data.titulo}: ${data.gancho} Para niños y niñas ${data.edad}. Animación a domicilio en Santiago y la Región Metropolitana.`;
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const jsonLd = [buildLocalBusiness(logoUrl), buildService(data.titulo, data.gancho, logoUrl)];
+---
+
+<BaseLayout title={title} description={description} path={`/servicios/${slug}/`} ogImage={heroImage} jsonLd={jsonLd}>
+  <section class="bg-menta-light px-4 py-12 text-center">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-4">
+      <span class="text-6xl" aria-hidden="true">{data.emoji}</span>
+      <h1 class="font-titulos text-3xl font-extrabold text-tinta md:text-4xl">{data.titulo}</h1>
+      <p class="font-texto text-lg text-tinta/80">{data.gancho}</p>
+      {categoria && (
+        <a href={`/servicios/${categoria.slug}/`} class="font-texto text-sm font-bold text-menta-dark hover:underline">
+          {categoria.emoji} {categoria.nombre}
+        </a>
+      )}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 py-10">
+    <Image
+      src={heroImage}
+      alt={`Niños y niñas disfrutando de ${data.titulo} en un cumpleaños`}
+      width={960}
+      height={640}
+      class="w-full rounded-3xl object-cover shadow-md"
+      priority
+    />
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-6">
+    <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 md:p-8">
+      <h2 class="font-titulos text-2xl font-extrabold text-tinta">
+        {esPlazaBlanda ? 'Incluye' : '¿Qué llevamos?'}
+      </h2>
+
+      {
+        esPlazaBlanda && (
+          <div class="mt-4 flex flex-wrap gap-3">
+            <span class="rounded-full bg-amarillo/30 px-4 py-2 font-texto font-bold text-tinta">
+              🎂 Edad: {data.edad}
+            </span>
+            {itemsDestacados.map((item) => (
+              <span class="rounded-full bg-rosado/15 px-4 py-2 font-texto font-bold text-rosado-dark">
+                ⏱️ {item}
+              </span>
+            ))}
+          </div>
+        )
+      }
+
+      <ul class="mt-5 grid gap-2 sm:grid-cols-2">
+        {
+          (esPlazaBlanda ? itemsIncluye : data.materiales ?? []).map((item) => (
+            <li class="flex items-start gap-2 font-texto text-tinta">
+              <span aria-hidden="true">🎈</span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      {
+        !esPlazaBlanda && (
+          <p class="mt-4 font-texto text-sm text-tinta/70">
+            <span aria-hidden="true">🎂</span> Edad recomendada: {data.edad}
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-4 pb-10">
+    <div class="contenido-md">
+      <Content />
+    </div>
+  </section>
+
+  {
+    data.combinable && (
+      <section class="mx-auto max-w-4xl px-4 pb-10">
+        <TematicasCombinables />
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-5xl px-4 pb-12">
+    <h2 class="font-titulos text-2xl font-extrabold text-tinta">Galería {data.titulo}</h2>
+    <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {
+        galeria.map((imagen, indice) => (
+          <Image
+            src={imagen}
+            alt={`Foto ${indice + 1} de ${data.titulo}`}
+            width={320}
+            height={320}
+            class="h-32 w-full rounded-2xl object-cover shadow-sm sm:h-36"
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="px-4 pb-16">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-4 rounded-3xl bg-rosado px-6 py-10 text-center text-white">
+      <p class="font-titulos text-2xl font-extrabold">{data.cierre}</p>
+      <CtaWhatsApp texto={`Quiero cotizar ${data.titulo}`} />
+    </div>
+  </section>
+</BaseLayout>

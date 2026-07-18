@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../lib/site';
+import { resolveImage } from '../lib/images';
+
+const logo = resolveImage('logo');
+
+const enlaces = [
+  { href: '/', etiqueta: 'Inicio' },
+  { href: '/servicios/', etiqueta: 'Servicios' },
+  { href: '/galeria/', etiqueta: 'Galería' },
+  { href: '/contacto/', etiqueta: 'Contacto' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-40 border-b border-menta-light bg-crema/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+    <a href="/" class="flex items-center gap-2 shrink-0">
+      <Image src={logo} alt="Logo de Always Kids" width={48} height={48} class="h-11 w-11 rounded-full" />
+      <span class="font-titulos text-lg font-extrabold text-menta-dark">{site.nombre}</span>
+    </a>
+
+    <nav aria-label="Navegación principal" class="hidden md:flex md:items-center md:gap-6">
+      {
+        enlaces.map((enlace) => (
+          <a
+            href={enlace.href}
+            class:list={[
+              'font-texto font-semibold text-tinta transition-colors hover:text-rosado',
+              currentPath === enlace.href && 'text-rosado',
+            ]}
+          >
+            {enlace.etiqueta}
+          </a>
+        ))
+      }
+      <a
+        href={site.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-full bg-menta px-4 py-2 font-texto font-bold text-white shadow-sm transition-transform hover:scale-105"
+      >
+        WhatsApp
+      </a>
+    </nav>
+
+    <details class="relative md:hidden" id="menu-movil">
+      <summary
+        class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full bg-menta-light text-tinta [&::-webkit-details-marker]:hidden"
+        aria-label="Abrir menú de navegación"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="h-6 w-6">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </summary>
+      <nav
+        aria-label="Navegación móvil"
+        class="absolute right-0 top-12 flex w-56 flex-col gap-1 rounded-2xl border border-menta-light bg-white p-3 shadow-lg"
+      >
+        {
+          enlaces.map((enlace) => (
+            <a href={enlace.href} class="rounded-xl px-3 py-2 font-texto font-semibold text-tinta hover:bg-menta-light">
+              {enlace.etiqueta}
+            </a>
+          ))
+        }
+        <a
+          href={site.whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-1 rounded-xl bg-menta px-3 py-2 text-center font-texto font-bold text-white"
+        >
+          WhatsApp
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const menu = document.getElementById('menu-movil') as HTMLDetailsElement | null;
+  menu?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    if (target.tagName === 'A') {
+      menu.open = false;
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (menu && menu.open && !menu.contains(event.target as Node)) {
+      menu.open = false;
+    }
+  });
+</script>

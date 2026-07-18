@@ -1,0 +1,21 @@
+---
+const puntos = [
+  'Vamos a domicilio en la Región Metropolitana',
+  'Nos adaptamos a cualquier espacio de tu casa, departamento, salones de eventos, colegios, jardines y parque',
+  'Actividades organizadas y supervisadas en todo momento',
+];
+---
+
+<section class="rounded-3xl bg-menta-light p-6 md:p-8">
+  <h2 class="font-titulos text-2xl font-extrabold text-menta-dark">📍 Servicio a domicilio</h2>
+  <ul class="mt-4 flex flex-col gap-2">
+    {
+      puntos.map((punto) => (
+        <li class="flex gap-2 font-texto text-tinta">
+          <span aria-hidden="true">✔️</span>
+          <span>{punto}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>

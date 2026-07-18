@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../lib/site';
+
+const todosServicios = await getCollection('servicios');
+---
+
+<section id="servicios-tematicos" aria-labelledby="servicios-tematicos-titulo" class="mx-auto max-w-4xl px-4 pb-12">
+  <h2 id="servicios-tematicos-titulo" class="font-titulos text-2xl font-extrabold text-menta-dark">
+    🎂 Conoce nuestros servicios temáticos
+  </h2>
+  <div class="mt-5 grid grid-cols-1 gap-6 md:grid-cols-3">
+    {
+      site.categorias.map((categoria) => {
+        const serviciosDeCategoria = categoria.servicios
+          .map((slug) => todosServicios.find((entrada) => entrada.data.slug === slug))
+          .filter((entrada) => entrada !== undefined);
+        return (
+          <div class="flex flex-col gap-2">
+            <a
+              href={`/servicios/${categoria.slug}/`}
+              class="font-titulos text-lg font-extrabold text-menta-dark hover:text-rosado hover:underline focus-visible:underline focus-visible:outline-none"
+            >
+              <span aria-hidden="true">{categoria.emoji}</span> {categoria.nombre}
+            </a>
+            <ul class="flex flex-col">
+              {serviciosDeCategoria.map((servicio) => (
+                <li>
+                  <a
+                    href={`/servicios/${servicio!.data.slug}/`}
+                    class="block w-full py-3 font-texto text-tinta/80 hover:text-rosado hover:underline focus-visible:text-rosado focus-visible:underline focus-visible:outline-none"
+                  >
+                    <span aria-hidden="true">{servicio!.data.emoji}</span> {servicio!.data.titulo}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>

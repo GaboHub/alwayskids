@@ -1,0 +1,21 @@
+---
+import { site } from '../lib/site';
+
+interface Props {
+  texto?: string;
+}
+
+const { texto = 'Escríbenos por WhatsApp' } = Astro.props;
+---
+
+<a
+  href={site.whatsapp}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="inline-flex items-center justify-center gap-2 rounded-full bg-rosado px-6 py-3 font-texto text-base font-bold text-white shadow-md transition-transform hover:scale-105 hover:bg-rosado-dark"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" class="h-5 w-5">
+    <path d="M16.03 3C9.4 3 4 8.4 4 15.03c0 2.27.63 4.4 1.72 6.22L4 29l7.94-1.66a12.9 12.9 0 0 0 4.09.66h.01c6.63 0 12.03-5.4 12.03-12.03C28.07 8.4 22.67 3 16.03 3Zm0 22.02c-1.32 0-2.62-.34-3.75-.99l-.27-.16-4.71.98.99-4.6-.18-.28a9.94 9.94 0 0 1-1.53-5.34c0-5.5 4.48-9.98 9.99-9.98 5.5 0 9.98 4.47 9.98 9.98 0 5.5-4.48 9.99-9.99 9.99Z" />
+  </svg>
+  {texto}
+</a>

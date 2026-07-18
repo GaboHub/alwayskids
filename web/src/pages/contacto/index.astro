@@ -1,0 +1,73 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../lib/site';
+import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
+import { buildLocalBusiness } from '../../lib/seo';
+import { redes } from '../../lib/redes';
+
+const pagina = await getEntry('paginas', 'contacto');
+if (!pagina) throw new Error('Falta la página contacto');
+const { Content } = await render(pagina);
+
+const logo = resolveImage('logo');
+
+const title = `Contacto | ${site.nombre} — Animación de fiestas infantiles a domicilio en Santiago`;
+const description =
+  'Contáctanos por WhatsApp o teléfono para cotizar tu animación infantil a domicilio en Santiago. Síguenos en Instagram, Facebook y TikTok.';
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const jsonLd = [buildLocalBusiness(logoUrl)];
+---
+
+<BaseLayout title={title} description={description} path="/contacto/" ogImage={logo} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <div class="contenido-md">
+      <Content />
+    </div>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      <a
+        href={site.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center justify-center gap-2 rounded-2xl bg-menta px-6 py-4 font-texto text-lg font-bold text-white shadow-md transition-transform hover:scale-105"
+      >
+        💬 Escríbenos por WhatsApp
+      </a>
+      <a
+        href={`tel:${site.telefonoE164}`}
+        class="flex items-center justify-center gap-2 rounded-2xl bg-rosado px-6 py-4 font-texto text-lg font-bold text-white shadow-md transition-transform hover:scale-105"
+      >
+        📞 Llámanos: {site.telefono}
+      </a>
+    </div>
+
+    <div class="mt-10 rounded-3xl bg-menta-light p-6">
+      <h2 class="font-titulos text-xl font-extrabold text-menta-dark">📍 Zona de cobertura</h2>
+      <p class="mt-2 font-texto text-tinta">{site.cobertura}</p>
+      <p class="mt-1 font-texto text-tinta/80">{site.ubicacion}</p>
+    </div>
+
+    <div class="mt-10">
+      <h2 class="font-titulos text-xl font-extrabold text-tinta">Síguenos en redes sociales</h2>
+      <div class="mt-4 flex gap-4">
+        {
+          redes.map((red) => (
+            <a
+              href={red.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={red.nombre}
+              class="flex h-14 w-14 items-center justify-center rounded-full bg-tinta text-white transition-transform hover:scale-110"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-7 w-7">
+                <path d={red.icono} />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

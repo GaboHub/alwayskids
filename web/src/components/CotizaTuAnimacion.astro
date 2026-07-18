@@ -1,0 +1,24 @@
+---
+import { site } from '../lib/site';
+import CtaWhatsApp from './CtaWhatsApp.astro';
+
+const { cotizacion } = site;
+---
+
+<section class="rounded-3xl bg-rosado/10 p-6 md:p-8">
+  <h2 class="font-titulos text-2xl font-extrabold text-rosado-dark">{cotizacion.titulo}</h2>
+  <p class="mt-3 font-texto text-tinta">{cotizacion.intro}</p>
+  <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+    {
+      cotizacion.criterios.map((criterio) => (
+        <li class="flex items-center gap-2 font-texto text-tinta">
+          <span aria-hidden="true">🎯</span>
+          <span>{criterio}</span>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="mt-6">
+    <CtaWhatsApp texto="Cotiza tu animación" />
+  </div>
+</section>

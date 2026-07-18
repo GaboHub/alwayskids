@@ -1,0 +1,50 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CotizaTuAnimacion from '../../components/CotizaTuAnimacion.astro';
+import { site } from '../../lib/site';
+import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
+import { buildLocalBusiness } from '../../lib/seo';
+
+const pagina = await getEntry('paginas', 'servicios');
+if (!pagina) throw new Error('Falta la página servicios');
+const { Content } = await render(pagina);
+
+const logo = resolveImage('logo');
+
+const title = `Servicios | ${site.nombre} — Animación de fiestas infantiles a domicilio en Santiago`;
+const description =
+  'Conoce todos nuestros servicios de animación infantil a domicilio: deportiva, científica y plazas blandas para bebés en Santiago y la Región Metropolitana.';
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const jsonLd = [buildLocalBusiness(logoUrl)];
+---
+
+<BaseLayout title={title} description={description} path="/servicios/" ogImage={logo} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <div class="contenido-md">
+      <Content />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-14">
+    <h2 class="font-titulos text-2xl font-extrabold text-tinta">Explora por categoría</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        site.categorias.map((categoria) => (
+          <ServiceCard
+            href={`/servicios/${categoria.slug}/`}
+            nombre={categoria.nombre}
+            emoji={categoria.emoji}
+            resumen={categoria.resumen}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pb-16">
+    <CotizaTuAnimacion />
+  </section>
+</BaseLayout>

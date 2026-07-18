@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import CategoriaVista from '../../../components/paginas/CategoriaVista.astro';
+import ServicioVista from '../../../components/paginas/ServicioVista.astro';
+import { site } from '../../../lib/site';
+
+export const getStaticPaths = (async () => {
+  const servicios = await getCollection('servicios');
+
+  const rutasCategoria = site.categorias.map((categoria) => ({
+    params: { slug: categoria.slug },
+    props: { kind: 'categoria' as const },
+  }));
+
+  const rutasServicio = servicios.map((entrada) => ({
+    params: { slug: entrada.data.slug },
+    props: { kind: 'servicio' as const },
+  }));
+
+  return [...rutasCategoria, ...rutasServicio];
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const { kind } = Astro.props;
+---
+
+{kind === 'categoria' ? <CategoriaVista slug={slug} /> : <ServicioVista slug={slug} />}

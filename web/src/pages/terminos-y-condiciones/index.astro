@@ -1,0 +1,28 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../lib/site';
+import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
+import { buildLocalBusiness } from '../../lib/seo';
+
+const pagina = await getEntry('paginas', 'terminos-y-condiciones');
+if (!pagina) throw new Error('Falta la página términos y condiciones');
+const { Content } = await render(pagina);
+
+const logo = resolveImage('logo');
+
+const title = `Términos y condiciones | ${site.nombre} — Animación de fiestas infantiles a domicilio en Santiago`;
+const description =
+  'Conoce los términos y condiciones de reserva, pago y uso de nuestros servicios de animación infantil y plazas blandas a domicilio en Santiago.';
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const jsonLd = [buildLocalBusiness(logoUrl)];
+---
+
+<BaseLayout title={title} description={description} path="/terminos-y-condiciones/" ogImage={logo} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <div class="contenido-md">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>
