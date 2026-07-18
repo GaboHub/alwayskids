@@ -1,0 +1,56 @@
+{
+  "nombre": "Always Kids",
+  "dominio": "alwayskids.cl",
+  "tagline": "Cumpleaños, Celebraciones y Eventos Infantiles",
+  "claim": "Calidad, entretención y novedad, somos @AlwaysKids.cl",
+  "descripcion": "Especialistas en animaciones y entretenciones infantiles a domicilio en Santiago de Chile: animación deportiva, animación científica y plazas blandas para bebés.",
+  "telefono": "+56 9 9890 5022",
+  "telefonoE164": "+56998905022",
+  "whatsapp": "https://wa.me/56998905022?text=Hola!%20Me%20gustar%C3%ADa%20recibir%20m%C3%A1s%20informaci%C3%B3n%20de%20los%20servicios%20de%20Always%20Kids%20%F0%9F%8E%88%F0%9F%8E%82%F0%9F%A5%B3",
+  "ubicacion": "Santiago de Chile, Región Metropolitana",
+  "cobertura": "Servicio a domicilio en toda la Región Metropolitana",
+  "redes": {
+    "instagram": "https://www.instagram.com/alwayskids.cl/",
+    "facebook": "https://web.facebook.com/alwayskids.cl/",
+    "tiktok": "https://www.tiktok.com/@alwayskids.cl"
+  },
+  "ctaHeader": "CONSULTA POR NUESTROS SERVICIOS",
+  "footer": "¡Descubre más sobre nuestros servicios de fiestas y entretenimiento infantiles a domicilio en nuestras redes sociales! Síguenos para ver videos e información.",
+  "categorias": [
+    {
+      "slug": "animacion-deportiva",
+      "nombre": "Animación deportiva",
+      "emoji": "🏆",
+      "resumen": "Entretenidas actividades y juegos deportivos que fomentan la actividad física, la coordinación y el trabajo en equipo. Ideal para cumpleaños llenos de movimiento, diversión y energía para niños y niñas.",
+      "servicios": ["aquakids", "deportekids", "escuadronkids", "futbolkids", "zumbakids"]
+    },
+    {
+      "slug": "animacion-cientifica",
+      "nombre": "Animación científica",
+      "emoji": "🧪",
+      "resumen": "Experimentos entretenidos, seguros y participativos, donde los niños y niñas aprenden jugando. Ideal para cumpleaños que desean tener una experiencia con ciencia y deporte.",
+      "servicios": ["atomokids", "atomo-deportekids"]
+    },
+    {
+      "slug": "plazas-blandas-bby",
+      "nombre": "Plazas blandas bby",
+      "emoji": "🧸",
+      "resumen": "Espacios de juegos seguros para los bebés y pre-escolares, con módulos blandos y acompañamiento de monitor. Perfecto para cumpleaños infantiles, eventos familiares y celebraciones mixtas.",
+      "servicios": ["arcoiris", "dino", "terreneitor", "sol"]
+    }
+  ],
+  "tematicasCombinables": {
+    "texto": "Las temáticas se pueden combinar entre sí, permitiendo una animación dinámica y variada durante el evento.",
+    "ejemplos": [
+      "Deporte + Fútbol + Zumba",
+      "Aqua + Deporte + Fútbol o Zumba",
+      "Deporte + Escuadrón + Fútbol o Zumba"
+    ],
+    "cierre": "Nos adaptamos a tus gustos, espacio y tiempo disponible."
+  },
+  "cotizacion": {
+    "titulo": "Cotiza tu animación infantil",
+    "intro": "Cada evento es único ✨ Escríbenos y armamos una propuesta personalizada según:",
+    "criterios": ["Edad de los niños", "Cantidad de invitados", "Espacio disponible", "Temáticas favoritas"]
+  }
+}
