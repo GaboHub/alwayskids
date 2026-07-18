@@ -1,0 +1,111 @@
+---
+import { getEntry, getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../ServiceCard.astro';
+import ServicioADomicilio from '../ServicioADomicilio.astro';
+import CotizaTuAnimacion from '../CotizaTuAnimacion.astro';
+import TematicasCombinables from '../TematicasCombinables.astro';
+import Faq from '../Faq.astro';
+import { site, getCategoria, getOtrasCategorias } from '../../lib/site';
+import { getFaqsCategoria } from '../../lib/faqs';
+import { resolveImage, optimizedAbsoluteUrl } from '../../lib/images';
+import { buildLocalBusiness, buildFaqPage } from '../../lib/seo';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const categoria = getCategoria(slug);
+if (!categoria) throw new Error(`Categoría no encontrada: ${slug}`);
+
+const pagina = await getEntry('paginas', slug);
+if (!pagina) throw new Error(`Falta la página de categoría: ${slug}`);
+const { Content } = await render(pagina);
+
+const todosServicios = await getCollection('servicios');
+const serviciosDeCategoria = categoria.servicios
+  .map((servicioSlug) => todosServicios.find((entrada) => entrada.data.slug === servicioSlug))
+  .filter((entrada) => entrada !== undefined);
+
+const heroImage = resolveImage(`${categoria.servicios[0]}-hero`);
+const logo = resolveImage('logo');
+
+const descripciones: Record<string, string> = {
+  'animacion-deportiva':
+    'Animación deportiva infantil a domicilio en Santiago: AquaKids, DeporteKids, EscuadrónKids, FútbolKids y ZumbaKids para cumpleaños llenos de energía.',
+  'animacion-cientifica':
+    'Animación científica infantil a domicilio en Santiago: experimentos seguros y entretenidos con ÁtomoKids y Átomo+DeporteKids para cumpleaños educativos.',
+  'plazas-blandas-bby':
+    'Arriendo de plazas blandas para bebés y preescolares en Santiago: Arcoíris, Dino, Terreneitor y Sol, con monitor y 4 horas de juego seguro.',
+};
+
+const title = `${categoria.nombre} | ${site.nombre} — Animación a domicilio en Santiago`;
+const description = descripciones[slug] ?? categoria.resumen;
+
+const logoUrl = await optimizedAbsoluteUrl(logo);
+const faqsCategoria = getFaqsCategoria(slug);
+const jsonLd = [buildLocalBusiness(logoUrl), buildFaqPage(faqsCategoria)];
+
+const otrasCategorias = getOtrasCategorias(slug);
+---
+
+<BaseLayout title={title} description={description} path={`/servicios/${slug}/`} ogImage={heroImage} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <div class="contenido-md">
+      <Content />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-12">
+    <h2 class="font-titulos text-2xl font-extrabold text-tinta">
+      Nuestros servicios de {categoria.nombre.toLowerCase()}
+    </h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        serviciosDeCategoria.map((servicio) => (
+          <ServiceCard
+            href={`/servicios/${servicio!.data.slug}/`}
+            nombre={servicio!.data.titulo}
+            emoji={servicio!.data.emoji}
+            resumen={servicio!.data.gancho}
+            imagen={resolveImage(`${servicio!.data.slug}-hero`)}
+            altImagen={`Actividad de ${servicio!.data.titulo} en un cumpleaños infantil`}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    slug === 'animacion-deportiva' && (
+      <section class="mx-auto max-w-4xl px-4 pb-12">
+        <TematicasCombinables />
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-6xl px-4 pb-12">
+    <h2 class="font-titulos text-2xl font-extrabold text-tinta">Otras temáticas</h2>
+    <div class="mt-4 flex flex-wrap gap-3">
+      {
+        otrasCategorias.map((otra) => (
+          <a
+            href={`/servicios/${otra.slug}/`}
+            class="rounded-full bg-menta-light px-5 py-2 font-texto font-bold text-menta-dark transition-colors hover:bg-menta hover:text-white"
+          >
+            {otra.emoji} {otra.nombre}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <Faq items={faqsCategoria} />
+
+  <section class="mx-auto grid max-w-6xl gap-6 px-4 pb-16 md:grid-cols-2">
+    <ServicioADomicilio />
+    <CotizaTuAnimacion />
+  </section>
+</BaseLayout>

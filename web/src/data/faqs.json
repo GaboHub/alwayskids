@@ -1,0 +1,84 @@
+{
+  "global": [
+    {
+      "pregunta": "¿En qué comunas de Santiago hacen animaciones?",
+      "respuesta": "Nuestro servicio es a domicilio en toda la Región Metropolitana. Nos adaptamos a cualquier espacio: casa, departamento, salón de eventos, colegio, jardín o parque."
+    },
+    {
+      "pregunta": "¿Cómo cotizo y reservo una animación?",
+      "respuesta": "Escríbenos por WhatsApp y armamos una propuesta personalizada según la edad de los niños, la cantidad de invitados, el espacio disponible y las temáticas favoritas. La reserva se realiza con un abono del 50% mediante transferencia y el saldo se paga hasta 1 día antes o previo al inicio del evento."
+    },
+    {
+      "pregunta": "¿Puedo cambiar la fecha de mi evento?",
+      "respuesta": "Sí, aceptamos cambios de fecha con al menos 7 días de anticipación, sujeto a disponibilidad. El abono de reserva no es reembolsable."
+    },
+    {
+      "pregunta": "¿Quiénes realizan las actividades?",
+      "respuesta": "Nuestro equipo está formado por monitores expertos en Pedagogía en Educación Física, que adaptan los juegos y actividades a cada edad."
+    },
+    {
+      "pregunta": "¿Se pueden combinar las temáticas?",
+      "respuesta": "Sí, las temáticas se pueden combinar entre sí para una animación dinámica y variada, por ejemplo Deporte + Fútbol + Zumba. Nos adaptamos a tus gustos, espacio y tiempo disponible."
+    },
+    {
+      "pregunta": "¿Qué incluye el servicio?",
+      "respuesta": "Llevamos todo lo necesario para la animación: monitores, materiales de cada temática, música temática, parlante y micrófonos."
+    },
+    {
+      "pregunta": "¿Solo hacen cumpleaños?",
+      "respuesta": "No, también celebramos Día del Niño, fiestas de Navidad, paseos de curso y eventos para colegios, jardines y particulares."
+    }
+  ],
+  "categorias": {
+    "animacion-deportiva": [
+      {
+        "pregunta": "¿Desde qué edad son las actividades deportivas?",
+        "respuesta": "Las actividades se adaptan a la edad de los niños y niñas. Cada temática indica su edad recomendada, por ejemplo AquaKids desde los 5 años."
+      },
+      {
+        "pregunta": "¿Necesito piscina para AquaKids?",
+        "respuesta": "No. Si no tienes piscina, realizamos variadas actividades y juegos con agua para refrescar el día igual de entretenidos."
+      },
+      {
+        "pregunta": "¿Cuánto espacio necesito en mi casa?",
+        "respuesta": "Nos adaptamos a tu espacio: casa, departamento, patio, salón de eventos o parque. Al cotizar te ayudamos a elegir las actividades ideales según el lugar."
+      },
+      {
+        "pregunta": "¿Puedo combinar temáticas deportivas?",
+        "respuesta": "Sí, por ejemplo Deporte + Fútbol + Zumba o Aqua + Deporte + Fútbol. Las combinaciones permiten una animación variada durante todo el evento."
+      }
+    ],
+    "animacion-cientifica": [
+      {
+        "pregunta": "¿Los experimentos son seguros?",
+        "respuesta": "Sí, realizamos experimentos entretenidos, seguros y participativos, donde los niños y niñas aprenden jugando bajo la guía de nuestros monitores."
+      },
+      {
+        "pregunta": "¿Desde qué edad es la animación científica?",
+        "respuesta": "Cada temática indica su edad recomendada en su página. Las actividades se adaptan a la edad del grupo."
+      },
+      {
+        "pregunta": "¿Se puede combinar ciencia con deporte?",
+        "respuesta": "Sí, la temática Átomo + DeporteKids combina experimentos científicos con juegos deportivos en una misma animación."
+      }
+    ],
+    "plazas-blandas-bby": [
+      {
+        "pregunta": "¿Para qué edad son las plazas blandas?",
+        "respuesta": "Las plazas blandas están diseñadas para bebés y preescolares hasta 5 años, con módulos blandos y acompañamiento de monitor."
+      },
+      {
+        "pregunta": "¿Cuándo empieza a correr el tiempo de arriendo?",
+        "respuesta": "El arriendo rige desde la hora de inicio del evento. Si nuestro equipo llega antes para instalar, ese tiempo no implica cargos adicionales ni reduce el tiempo contratado."
+      },
+      {
+        "pregunta": "¿Qué requisitos debe tener el espacio?",
+        "respuesta": "El lugar debe ser apto: sin piedras, hoyos ni desniveles; si es pasto, debe estar seco, y contar con conexión eléctrica cuando corresponda."
+      },
+      {
+        "pregunta": "¿Qué reglas de uso tiene la plaza blanda?",
+        "respuesta": "Los niños ingresan descalzos con calcetines, no se consumen alimentos ni líquidos dentro del área, no se permiten mascotas y pedimos supervisión de un adulto en todo momento."
+      }
+    ]
+  }
+}
